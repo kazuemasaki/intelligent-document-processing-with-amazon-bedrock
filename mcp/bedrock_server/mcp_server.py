@@ -103,15 +103,17 @@ def get_configuration():
 STATE_MACHINE_ARN, BUCKET_NAME = get_configuration()
 
 SUPPORTED_MODELS = [
-    "us.anthropic.claude-opus-4-1-20250805-v1:0",
-    "us.anthropic.claude-sonnet-4-20250514-v1:0",
-    "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
-    "us.anthropic.claude-3-5-sonnet-20241022-v2:0",
-    "us.anthropic.claude-3-5-haiku-20241022-v1:0",
-    "us.anthropic.claude-3-haiku-20240307-v1:0",
-    "us.amazon.nova-premier-v1:0",
-    "us.amazon.nova-pro-v1:0",
-    "us.amazon.nova-lite-v1:0",
+    "global.anthropic.claude-opus-4-5-20251101-v1:0",
+    "global.anthropic.claude-sonnet-4-5-20250929-v1:0",
+    "global.anthropic.claude-haiku-4-5-20251001-v1:0",
+    # "us.anthropic.claude-opus-4-1-20250805-v1:0",
+    # "us.anthropic.claude-sonnet-4-20250514-v1:0",
+    # "us.anthropic.claude-3-5-sonnet-20241022-v2:0",
+    # "us.anthropic.claude-3-5-haiku-20241022-v1:0",
+    # "us.anthropic.claude-3-haiku-20240307-v1:0",
+    # "us.amazon.nova-premier-v1:0",
+    # "us.amazon.nova-pro-v1:0",
+    # "us.amazon.nova-lite-v1:0",
 ]
 
 
@@ -283,7 +285,7 @@ def run_idp_bedrock_api(
 
     if model_params is None:
         model_params = {
-            "model_id": "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+            "model_id": "global.anthropic.claude-opus-4-5-20251101-v1:0",
             "output_length": 2000,
             "temperature": 0.0,
         }
@@ -403,7 +405,7 @@ def extract_document_attributes(
 
     if model_params is None:
         model_params = {
-            "model_id": "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+            "model_id": "global.anthropic.claude-opus-4-5-20251101-v1:0",
             "output_length": 2000,
             "temperature": 0.0,
         }
@@ -485,12 +487,12 @@ def list_supported_models() -> Dict[str, Any]:
     """
     return {
         "models": SUPPORTED_MODELS,
-        "default_model": "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+        "default_model": "global.anthropic.claude-opus-4-5-20251101-v1:0",
         "model_info": {
             "claude_models": [m for m in SUPPORTED_MODELS if "claude" in m],
-            "nova_models": [m for m in SUPPORTED_MODELS if "nova" in m],
-            "recommended_for_speed": "us.amazon.nova-lite-v1:0",
-            "recommended_for_quality": "us.anthropic.claude-sonnet-4-20250514-v1:0",
+            # "nova_models": [m for m in SUPPORTED_MODELS if "nova" in m],
+            "recommended_for_speed": "global.anthropic.claude-haiku-4-5-20251001-v1:0",
+            "recommended_for_quality": "global.anthropic.claude-opus-4-5-20251101-v1:0",
         },
     }
 
