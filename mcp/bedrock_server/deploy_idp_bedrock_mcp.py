@@ -173,18 +173,14 @@ def setup_agentcore_runtime(cognito_config, infra_config, agentcore_iam_role, re
     # Initialize AgentCore Runtime
     agentcore_runtime = Runtime()
 
-    # Configure authentication
-    auth_config = {
-        "customJWTAuthorizer": {
-            "allowedClients": [cognito_config["client_id"]],
-            "discoveryUrl": cognito_config["discovery_url"],
-        }
-    }
+    # Note: Using IAM SigV4 authentication (no authorizer_configuration)
+    # This allows cross-account/cross-agent invocation via IAM roles
 
     print("🔧 Configuring runtime...")
     print("   Infrastructure will be discovered automatically by the MCP server")
     print(f"   Expected State Machine: {infra_config['state_machine_arn']}")
     print(f"   Expected S3 Bucket: {infra_config['bucket_name']}")
+    print("   Authentication: IAM SigV4 (no JWT authorizer)")
 
     agentcore_runtime.configure(
         entrypoint="mcp_server.py",
@@ -192,7 +188,6 @@ def setup_agentcore_runtime(cognito_config, infra_config, agentcore_iam_role, re
         auto_create_ecr=True,
         requirements_file="requirements.txt",
         region=region,
-        authorizer_configuration=auth_config,
         protocol="MCP",
         agent_name="idp_bedrock_agent",
     )
